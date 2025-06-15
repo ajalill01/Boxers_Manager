@@ -197,7 +197,7 @@
             // Load boxer data with proper error handling
             async function loadBoxer() {
                 try {
-                    const response = await fetch(`http://localhost:3000/api/coach/getOne/${boxerId}`, {
+                    const response = await fetch(`https://boxers-manager.onrender.com/api/coach/getOne/${boxerId}`, {
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                         }
@@ -255,7 +255,7 @@
                 if (!confirm('Are you sure you want to permanently delete this boxer?')) return;
                 
                 try {
-                    const response = await fetch(`http://localhost:3000/api/coach/delete/${boxerId}`, {
+                    const response = await fetch(`https://boxers-manager.onrender.com/api/coach/delete/${boxerId}`, {
                         method: 'DELETE',
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('authToken')}`

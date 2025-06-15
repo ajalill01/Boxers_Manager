@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const errorMessage = document.getElementById('errorMessage');
-    const API_BASE_URL = 'http://localhost:3000/api';
+    const API_BASE_URL = 'https://boxers-manager.onrender.com/api';
 
 
     const loginBtn = loginForm.querySelector('button');

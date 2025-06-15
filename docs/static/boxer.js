@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load boxer data
     async function loadBoxer() {
         try {
-            const response = await fetch(`http://localhost:3000/api/coach/getOne/${boxerId}`, {
+            const response = await fetch(`https://boxers-manager.onrender.com/api/coach/getOne/${boxerId}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                 }
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm('Are you sure you want to delete this boxer?')) return;
         
         try {
-            const response = await fetch(`http://localhost:3000/api/coach/delete/${boxerId}`, {
+            const response = await fetch(`https://boxers-manager.onrender.com/api/coach/delete/${boxerId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('authToken')}`

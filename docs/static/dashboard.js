@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('photo', document.getElementById('boxer-photo').files[0]);
 
         try {
-            const response = await fetch('http://localhost:3000/api/coach/create', {
+            const response = await fetch('https://boxers-manager.onrender.com/api/coach/create', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('authToken')}`
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             boxerList.innerHTML = '<div class="loading">Loading...</div>';
             
-            const response = await fetch(`http://localhost:3000/api/coach/getAll?page=${currentPage}&limit=10`, {
+            const response = await fetch(`https://boxers-manager.onrender.com/api/coach/getAll?page=${currentPage}&limit=10`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                 }
@@ -152,7 +152,7 @@ boxerCard.innerHTML = `
         if (!confirm('Are you sure you want to delete this boxer?')) return;
         
         try {
-            const response = await fetch(`http://localhost:3000/api/coach/delete/${id}`, {
+            const response = await fetch(`https://boxers-manager.onrender.com/api/coach/delete/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('authToken')}`
