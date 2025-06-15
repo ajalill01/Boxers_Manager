@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check authentication
     if (!localStorage.getItem('authToken')) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 
     // Load initial boxer data
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logout
     logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('authToken');
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     });
 
     // Load boxers function

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check authentication
     if (!localStorage.getItem('authToken')) {
-        window.location.href = '../login.html';
+        window.location.href = 'index.html';
     }
 
     // Load boxer data
@@ -77,12 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     backBtn.addEventListener('click', () => {
-        window.location.href = '../boxers.html';
+        window.location.href = 'boxers.html';
     });
 
     logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('authToken');
-        window.location.href = '../login.html';
+        window.location.href = 'index.html';
     });
 
     menuToggle.addEventListener('click', () => {
