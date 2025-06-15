@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoxerPRO Dashboard</title>
+    <link rel="stylesheet" href="static/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="#E63946" d="M12,2L1,12H5V22H19V12H23L12,2M12,5L18,11V19H15V13H9V19H6V11L12,5Z"/>
+                </svg>
+                <h1>BOXER<span>PRO</span></h1>
+            </div>
+            <nav>
+                <a href="#" class="active">Dashboard</a>
+                <!-- <a href="boxers.html">Boxers</a>
+                <a href="training.html">Training</a>
+                <a href="profile.html">Profile</a> -->
+            </nav>
+            <button id="logout-btn">Log Out</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h2>Boxer Management</h2>
+                <button id="add-boxer-btn">+ Add Boxer</button>
+            </header>
+
+            <!-- Boxer List -->
+            <div class="boxer-list-container">
+                <div class="boxer-list-header">
+                    <span>Photo</span>
+                    <span>Name</span>
+                    <span>Age</span>
+                    <span>Weight</span>
+                    <span>Actions</span>
+                </div>
+                <div class="boxer-list" id="boxer-list">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button id="prev-page">Previous</button>
+                <span id="page-info">Page 1 of 1</span>
+                <button id="next-page">Next</button>
+            </div>
+        </div>
+
+        <!-- Add Boxer Modal -->
+        <div class="modal" id="add-boxer-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Add New Boxer</h3>
+                <form id="add-boxer-form">
+                    <div class="form-group">
+                        <input type="text" id="first-name" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="last-name" placeholder="Last Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="age" placeholder="Age" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="height" placeholder="Height (cm)" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="weight" placeholder="Weight (kg)" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="phone" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="boxer-photo">Profile Photo:</label>
+                        <input type="file" id="boxer-photo" accept="image/*" required>
+                    </div>
+                    <button type="submit">Add Boxer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <button class="menu-toggle" id="menu-toggle">☰ Menu</button>
+    <script src="static/dashboard.js"></script>
+</body>
+</html>

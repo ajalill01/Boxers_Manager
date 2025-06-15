@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Boxer | BOXERPRO</title>
+    <link rel="stylesheet" href="static/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .edit-boxer-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--dark-gray);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--blood-red);
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--light);
+        }
+
+        .photo-upload {
+            grid-column: span 2;
+            text-align: center;
+        }
+
+        .photo-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--blood-red);
+            margin: 0 auto 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .photo-upload {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="#E63946" d="M12,2L1,12H5V22H19V12H23L12,2M12,5L18,11V19H15V13H9V19H6V11L12,5Z"/>
+                </svg>
+                <h1>BOXER<span>PRO</span></h1>
+            </div>
+            <nav>
+                <a href="../dashboard.html">Dashboard</a>
+                <a href="../boxers.html">Boxers</a>
+                <a href="../training.html">Training</a>
+                <a href="../profile.html">Profile</a>
+            </nav>
+            <button id="logout-btn">Log Out</button>
+        </div>
+
+
+        <div class="main-content">
+            <header>
+                <h2>Edit Boxer Profile</h2>
+                <button id="back-btn">← Cancel</button>
+            </header>
+
+
+            <div class="edit-boxer-container">
+                <form id="edit-boxer-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" min="12" max="99" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" min="120" max="250" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" min="40" max="200" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group photo-upload">
+                            <label>Profile Photo</label>
+                            <img id="photo-preview" class="photo-preview" src="../static/default-boxer.jpg" alt="Current Photo">
+                            <input type="file" id="photo-upload" accept="image/*">
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button type="submit" class="action-btn edit-btn">Save Changes</button>
+                        <button type="button" id="cancel-btn" class="action-btn delete-btn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <button class="menu-toggle" id="menu-toggle">☰ Menu</button>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const API_BASE_URL = 'http://localhost:3000/api/coach';
+            
+            const elements = {
+                form: document.getElementById('edit-boxer-form'),
+                firstName: document.getElementById('first-name'),
+                lastName: document.getElementById('last-name'),
+                age: document.getElementById('age'),
+                height: document.getElementById('height'),
+                weight: document.getElementById('weight'),
+                phone: document.getElementById('phone'),
+                photoPreview: document.getElementById('photo-preview'),
+                photoUpload: document.getElementById('photo-upload'),
+                backBtn: document.getElementById('back-btn'),
+                cancelBtn: document.getElementById('cancel-btn'),
+                logoutBtn: document.getElementById('logout-btn'),
+                menuToggle: document.getElementById('menu-toggle'),
+                sidebar: document.getElementById('sidebar')
+            };
+
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const boxerId = urlParams.get('id');
+            
+            if (!localStorage.getItem('authToken')) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            if (!boxerId) {
+                showError('No boxer ID specified');
+                setTimeout(() => window.location.href = '../boxers.html', 1500);
+                return;
+            }
+
+            try {
+                const boxer = await fetchBoxer(boxerId);
+                populateForm(boxer);
+            } catch (error) {
+                handleLoadingError(error);
+            }
+
+            elements.photoUpload.addEventListener('change', handlePhotoUpload);
+            elements.form.addEventListener('submit', (e) => handleSubmit(e, boxerId));
+            elements.backBtn.addEventListener('click', () => window.location.href = `../boxer.html?id=${boxerId}`);
+            elements.cancelBtn.addEventListener('click', () => window.location.href = `../boxer.html?id=${boxerId}`);
+            elements.logoutBtn.addEventListener('click', logout);
+            elements.menuToggle.addEventListener('click', toggleSidebar);
+
+            function handlePhotoUpload(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        elements.photoPreview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            function populateForm(boxer) {
+                elements.firstName.value = boxer.firstName || '';
+                elements.lastName.value = boxer.lastName || '';
+                elements.age.value = boxer.age || '';
+                elements.height.value = boxer.height || '';
+                elements.weight.value = boxer.weight || '';
+                elements.phone.value = boxer.phoneNumber || '';
+                elements.photoPreview.src = boxer.picture?.url || DEFAULT_IMAGE;
+            }
+
+            // Form Submission
+            async function handleSubmit(event, id) {
+                event.preventDefault();
+                
+                const formData = new FormData();
+                formData.append('firstName', elements.firstName.value);
+                formData.append('lastName', elements.lastName.value);
+                formData.append('age', elements.age.value);
+                formData.append('height', elements.height.value);
+                formData.append('weight', elements.weight.value);
+                formData.append('phoneNumber', elements.phone.value);
+                
+                if (elements.photoUpload.files[0]) {
+                    formData.append('picture', elements.photoUpload.files[0]);
+                }
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/update/${id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                        },
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(await response.text());
+                    }
+
+                    window.location.href = `../boxer.html?id=${id}`;
+                } catch (error) {
+                    showError('Failed to update boxer');
+                    console.error('Update error:', error);
+                }
+            }
+
+            // API Functions
+            async function fetchBoxer(id) {
+                const response = await fetch(`${API_BASE_URL}/getOne/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (!result.success || !result.data) {
+                    throw new Error('Invalid API response structure');
+                }
+
+                return result.data;
+            }
+
+            // Utility Functions
+            function toggleSidebar() {
+                elements.sidebar.classList.toggle('active');
+            }
+
+            function logout() {
+                localStorage.removeItem('authToken');
+                window.location.href = '../login.html';
+            }
+
+            function showError(message) {
+                const errorEl = document.createElement('div');
+                errorEl.className = 'error-message';
+                errorEl.textContent = message;
+                errorEl.style.backgroundColor = 'var(--blood-red)';
+                errorEl.style.color = 'white';
+                errorEl.style.padding = '1rem';
+                errorEl.style.position = 'fixed';
+                errorEl.style.top = '20px';
+                errorEl.style.right = '20px';
+                errorEl.style.borderRadius = '4px';
+                errorEl.style.zIndex = '1000';
+                document.body.appendChild(errorEl);
+                
+                setTimeout(() => errorEl.remove(), 3000);
+            }
+
+            function handleLoadingError(error) {
+                console.error('Boxer load error:', error);
+                showError('Failed to load boxer data');
+                setTimeout(() => window.location.href = 'boxers.html', 2000);
+            }
+        });
+    </script>
+</body>
+</html>

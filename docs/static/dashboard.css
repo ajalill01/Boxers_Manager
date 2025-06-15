@@ -1,0 +1,621 @@
+:root {
+    --blood-red: #E63946;
+    --dark-red: #D00000;
+    --black: #0B0B0B;
+    --dark-gray: #1A1A1A;
+    --light: #F1FAEE;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: var(--black);
+    color: var(--light);
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: var(--dark-gray);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(230, 57, 70, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.logo svg {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    color: var(--light);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.logo span {
+    color: var(--blood-red);
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-grow: 1;
+}
+
+nav a {
+    color: var(--light);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+nav a:hover, nav a.active {
+    background-color: rgba(230, 57, 70, 0.2);
+    color: var(--blood-red);
+}
+
+#logout-btn {
+    background-color: var(--blood-red);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: auto;
+    transition: all 0.3s;
+}
+
+#logout-btn:hover {
+    background-color: var(--dark-red);
+    transform: translateY(-2px);
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    padding: 2rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+header h2 {
+    color: var(--light);
+    font-size: 1.8rem;
+}
+
+#add-boxer-btn {
+    background-color: var(--blood-red);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#add-boxer-btn:hover {
+    background-color: var(--dark-red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(230, 57, 70, 0.3);
+}
+
+/* Boxer List */
+.boxer-list-container {
+    background-color: var(--dark-gray);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.boxer-list-header {
+    display: grid;
+    grid-template-columns: 100px 1fr 80px 100px 150px;
+    padding: 1rem;
+    background-color: rgba(230, 57, 70, 0.1);
+    font-weight: 700;
+    border-bottom: 1px solid rgba(230, 57, 70, 0.2);
+}
+
+.boxer-list {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.boxer-card {
+    display: grid;
+    grid-template-columns: 100px 1fr 80px 100px 150px;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s;
+        padding-right: 0.2em;
+
+}
+
+.boxer-card:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.boxer-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--blood-red);
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: var(--light);
+    cursor: pointer;
+    padding: 0.5rem;
+    margin: 0 0.25rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.view-btn {
+    background-color: var(--blood-red);
+}
+
+.edit-btn {
+    background-color: #457b9d;
+}
+
+.delete-btn {
+    background-color: #e63946;
+}
+
+.action-btn:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.pagination button {
+    background-color: var(--dark-gray);
+    color: var(--light);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.pagination button:hover {
+    background-color: var(--blood-red);
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--dark-gray);
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    color: var(--light);
+    cursor: pointer;
+}
+
+.modal h3 {
+    margin-bottom: 1.5rem;
+    color: var(--blood-red);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: var(--light);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--light);
+}
+
+.modal-content button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--blood-red);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s;
+}
+
+.modal-content button[type="submit"]:hover {
+    background-color: var(--dark-red);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        padding: 1rem;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .logo {
+        margin-bottom: 0;
+        margin-right: auto;
+    }
+    
+    nav {
+        flex-direction: row;
+        margin-top: 0;
+        display: none; /* Consider mobile menu */
+    }
+    
+    .boxer-list-header, .boxer-card {
+        grid-template-columns: 60px 1fr 60px 80px 120px;
+    }
+}
+
+/* Add this to your existing CSS */
+.boxer-card .actions {
+    display: flex;
+    gap: 0.5rem;
+    padding-right : 0.5em;
+}
+
+.boxer-card .action-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* Optional: Hover effects */
+.boxer-card .action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Add these media queries at the end of your existing CSS */
+
+/* Tablet View (768px) */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        padding: 1rem;
+        align-items: center;
+    }
+
+    .logo {
+        margin-bottom: 0;
+        margin-right: auto;
+    }
+
+    .logo h1 {
+        font-size: 1.2rem;
+    }
+
+    nav {
+        display: none; /* Replace with hamburger menu if needed */
+    }
+
+    #logout-btn {
+        margin-top: 0;
+        padding: 0.5rem 1rem;
+    }
+
+    .boxer-list-header, 
+    .boxer-card {
+        grid-template-columns: 60px 1fr 60px 80px 120px;
+        font-size: 0.9rem;
+    }
+
+    .boxer-photo {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Mobile View (480px) */
+@media (max-width: 480px) {
+    .main-content {
+        padding: 1rem;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .boxer-list-header {
+        display: none; /* Hide headers on small screens */
+    }
+
+    .boxer-card {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 1rem;
+        position: relative;
+    }
+
+    .boxer-card::before {
+        content: attr(data-label);
+        color: var(--blood-red);
+        font-weight: bold;
+    }
+
+    .boxer-card > * {
+        grid-column: 1;
+    }
+
+    .boxer-card .actions {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 1rem;
+    }
+}
+
+/* Small Mobile (360px) */
+@media (max-width: 360px) {
+    .boxer-card .actions {
+        position: static;
+        justify-content: flex-end;
+    }
+
+    .action-btn {
+        padding: 0.4rem 0.6rem !important;
+        font-size: 0.7rem !important;
+    }
+}
+
+/* Sidebar Fixes */
+.sidebar {
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.main-content {
+    margin-left: 250px; /* Match sidebar width */
+    transition: margin 0.3s ease;
+}
+
+/* Boxer Card Grid Fix */
+.boxer-list-header,
+.boxer-card {
+    grid-template-columns: 80px minmax(150px, 1fr) 60px 80px 150px;
+}
+
+/* Action Buttons Fix */
+.boxer-card .actions {
+    display: flex;
+    gap: 8px;
+}
+
+.boxer-card .action-btn {
+    white-space: nowrap;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+}
+
+/* Mobile Sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 70%;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 101;
+        background: var(--blood-red);
+        border: none;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+    }
+}
+
+/* Add to your CSS */
+.name { font-weight: 600; }
+.age, .weight { text-align: center; }
+.boxer-photo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--blood-red);
+}
+
+/* Boxer Detail Page Styles */
+.boxer-detail-card {
+    background-color: var(--dark-gray);
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(230, 57, 70, 0.2);
+    padding-bottom: 1.5rem;
+}
+
+.detail-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--blood-red);
+}
+
+.detail-title h3 {
+    font-size: 1.8rem;
+    color: var(--light);
+    margin-bottom: 0.5rem;
+}
+
+.detail-title p {
+    color: var(--blood-red);
+    font-weight: 600;
+}
+
+.detail-body {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.detail-label {
+    color: var(--blood-red);
+    font-weight: 600;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+#back-btn {
+    background-color: var(--dark-gray);
+    color: var(--light);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#back-btn:hover {
+    background-color: rgba(230, 57, 70, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detail-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .detail-actions {
+        flex-direction: column;
+    }
+    
+    .boxer-detail-card {
+        padding: 1.5rem;
+    }
+}

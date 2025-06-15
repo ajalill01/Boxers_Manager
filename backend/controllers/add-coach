@@ -1,0 +1,33 @@
+const Coach = require('../models/coach')
+const boxer = require('../models/boxer')
+const bcrypt = require('bcrypt')
+
+
+const addCoach = async () => {
+    try {
+        const existingCoach = await Coach.findOne({ email: process.env.ADMIN_EMAIL });
+        
+        if (existingCoach) {
+            console.log('Coach already exists');
+            return;
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPass = await bcrypt.hash(process.env.ADMIN_PASS, salt);
+
+        const newCoach = new Coach({
+            email: process.env.ADMIN_EMAIL,
+            password: hashedPass,
+        });
+
+        await newCoach.save();
+
+        console.log('Coach has been created');
+    } catch (e) {
+        console.log('Error from addCoach\n', e);
+    } 
+};
+
+
+
+module.exports = addCoach

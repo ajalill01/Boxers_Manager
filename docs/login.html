@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxing Coach Login</title>
+    <link rel="stylesheet" href="static/login.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="login-container">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path fill="#E63946" d="M12,2L1,12H5V22H19V12H23L12,2M12,5L18,11V19H15V13H9V19H6V11L12,5Z"/>
+            </svg>
+            <h1>BOXER<span>PRO</span></h1>
+        </div>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" required>
+                <label for="email">Coach Email</label>
+                <div class="underline"></div>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="password" required>
+                <label for="password">Password</label>
+                <div class="underline"></div>
+            </div>
+            
+            <button type="submit">
+                <span>LOG IN</span>
+                <div class="pulse"></div>
+            </button>
+        </form>
+        
+        <div class="error-message" id="errorMessage"></div>
+    </div>
+
+    <script src="static/login.js"></script>
+</body>
+</html>
