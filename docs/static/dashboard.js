@@ -190,11 +190,3 @@ document.addEventListener('click', (e) => {
     }
 });
 
-.boxer-list {
-    overflow-x: hidden; /* This will hide the horizontal scrollbar */
-    overflow-y: auto;   /* This will keep the vertical scrolling */
-}
-
-.boxer-list-container {
-    overflow-x: hidden; /* Additional safety to prevent horizontal scroll */
-}
